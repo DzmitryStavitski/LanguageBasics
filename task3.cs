@@ -10,11 +10,6 @@ namespace tasks.basics1
 {
 	class task3
 	{
-		public static void Main()
-		{
-			Console.WriteLine(selectСases(@"C:\Users\d.stavitsky\source\repos\tasks\tasks\basics1\TextFile1.txt"));
-			Console.ReadLine();
-		}
 		public static string selectСases(string pathToTheFile, int numberOfLines = 10)
 		{
 			List<String> stringsFromFile = new List<String>();
