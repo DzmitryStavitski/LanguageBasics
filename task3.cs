@@ -10,12 +10,6 @@ namespace tasks.basics1
 {
 	class task3
 	{
-		public static void Main()
-		{
-			Console.WriteLine(SelectСases(@"C:\Users\d.stavitsky\source\repos\tasks\tasks\basics1\TextFile1.txt"));
-			Console.ReadLine();
-		}
-
 		private static List<String> ReturnStringsFromFile(string pathToTheFile)
         {
 			List<String> stringsFromFile = new List<String>();
@@ -30,7 +24,6 @@ namespace tasks.basics1
 
 			return stringsFromFile;
 		}
-
 
 		private static string WriteStringsIntoTheFile(string filePath, List<String> strings)
         {
