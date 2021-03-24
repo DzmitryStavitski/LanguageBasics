@@ -10,8 +10,14 @@ namespace tasks.basics1
 {
 	class task3
 	{
-		public static string selectСases(string pathToTheFile, int numberOfLines = 10)
+		public static void Main()
 		{
+			Console.WriteLine(SelectСases(@"C:\Users\d.stavitsky\source\repos\tasks\tasks\basics1\TextFile1.txt"));
+			Console.ReadLine();
+		}
+
+		private static List<String> ReturnStringsFromFile(string pathToTheFile)
+        {
 			List<String> stringsFromFile = new List<String>();
 
 			StreamReader sr = new StreamReader(pathToTheFile, System.Text.Encoding.Default);
@@ -22,23 +28,15 @@ namespace tasks.basics1
 			}
 			sr.Close();
 
-			List<String> randomStringFromFile = new List<String>();
-			for (int i = 0; i < numberOfLines; i++)
-			{
-				int randomStringNumber = new Random().Next(1, stringsFromFile.Count());
-				randomStringFromFile.Add(stringsFromFile[randomStringNumber]);
-				stringsFromFile.RemoveAt(randomStringNumber);
-			}
+			return stringsFromFile;
+		}
 
-			FileInfo fileInf = new FileInfo(pathToTheFile);
-			string directory = fileInf.DirectoryName;
-			string fileName = Path.GetFileNameWithoutExtension(fileInf.Name);
-			string fileExtension = fileInf.Extension;
 
-			FileStream filestream = new FileStream(directory + "\\" + fileName + "_res" + fileExtension, FileMode.Create);
+		private static string WriteStringsIntoTheFile(string filePath, List<String> strings)
+        {
+			FileStream filestream = new FileStream(filePath, FileMode.Create);
 			StreamWriter streamwriter = new StreamWriter(filestream);
-			streamwriter.WriteLine(stringsFromFile[0]);
-			foreach (string oneString in randomStringFromFile)
+			foreach (string oneString in strings)
 			{
 				streamwriter.WriteLine(oneString);
 			}
@@ -46,6 +44,27 @@ namespace tasks.basics1
 			streamwriter.Close();
 
 			return filestream.Name;
+		}
+
+		public static string SelectСases(string pathToTheFile, int numberOfLines = 10)
+		{
+			List<String> stringsFromFile = ReturnStringsFromFile(pathToTheFile);
+
+			List<String> randomStringFromFile = new List<String>();
+			for (int i = 0; i < numberOfLines; i++)
+			{
+				int randomStringNumber = new Random().Next(1, stringsFromFile.Count());
+				randomStringFromFile.Add(stringsFromFile[randomStringNumber]);
+				stringsFromFile.RemoveAt(randomStringNumber);
+			}
+			randomStringFromFile.Insert(0, stringsFromFile[0]);
+
+			FileInfo fileInf = new FileInfo(pathToTheFile);
+			string directory = fileInf.DirectoryName;
+			string fileName = Path.GetFileNameWithoutExtension(fileInf.Name);
+			string fileExtension = fileInf.Extension;
+
+			return WriteStringsIntoTheFile($"{directory}\\{fileName}_res{fileExtension}", stringsFromFile);
 		}
 	}
 }

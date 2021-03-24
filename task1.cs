@@ -10,15 +10,17 @@ namespace tasks
 {
 	class task1
 	{
+		private const int MaxSecondsDifference = 10;
+
 		static void Main(string[] args)
 		{
 			Console.Write("Directory: ");
 			string directory = Console.ReadLine();
 
 			Console.Write("File Extension: ");
-			string extencion = Console.ReadLine();
+			string extension = Console.ReadLine();
 
-			foreach (FileInfo file in GetFilesList(directory, extencion))
+			foreach (FileInfo file in GetFilesList(directory, extension))
 			{
 				Console.WriteLine(file.FullName);
 			}
@@ -44,12 +46,14 @@ namespace tasks
 			foreach (FileInfo file in allFiles)
 			{
 				if (file.CreationTime < mostRecentTime)
+                {
 					mostRecentTime = file.CreationTime;
+				}					
 			}
 
 			foreach (FileInfo file in allFiles)
 			{
-				if (file.CreationTime == mostRecentTime || (file.CreationTime < mostRecentTime.AddSeconds(10) && file.CreationTime > mostRecentTime))
+				if (file.CreationTime == mostRecentTime || (file.CreationTime < mostRecentTime.AddSeconds(MaxSecondsDifference) && file.CreationTime > mostRecentTime))
 				{
 					results.Add(file);
 				}
